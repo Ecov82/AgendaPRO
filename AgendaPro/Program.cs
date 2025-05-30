@@ -1,16 +1,16 @@
 using AgendaPro.Data;
+using AgendaPro.Models.Scheduling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Registra MVC
 builder.Services.AddControllersWithViews();
 
-// Configura o DbContext com SQLite
+// Configura o DbContext com SQL Server usando a connection string do appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=agenda.db"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configura Identity com AppDbContext
 IdentityBuilder identityBuilder = builder.Services.AddDefaultIdentity<IdentityUser>(options =>

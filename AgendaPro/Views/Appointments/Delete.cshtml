@@ -1,0 +1,32 @@
+﻿@model AgendaPro.Models.Scheduling.Appointment
+
+@{
+    ViewData["Title"] = "Excluir Agendamento";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Tem certeza que deseja excluir este agendamento?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Cliente</dt>
+        <dd class="col-sm-9">@Model.ClientName</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.ClientEmail</dd>
+
+        <dt class="col-sm-3">Data</dt>
+        <dd class="col-sm-9">@Model.Date</dd>
+
+        <dt class="col-sm-3">Serviço</dt>
+        <dd class="col-sm-9">@Model.Service?.Name</dd>
+    </dl>
+</div>
+
+<form asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Excluir" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

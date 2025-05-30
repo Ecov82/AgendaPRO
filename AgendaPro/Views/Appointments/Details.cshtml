@@ -1,0 +1,36 @@
+﻿@model AgendaPro.Models.Scheduling.Appointment
+
+@{
+    ViewData["Title"] = "Detalhes do Agendamento";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Agendamento</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Cliente</dt>
+        <dd class="col-sm-9">@Model.ClientName</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.ClientEmail</dd>
+
+        <dt class="col-sm-3">Data</dt>
+        <dd class="col-sm-9">@Model.Date</dd>
+
+        <dt class="col-sm-3">Serviço</dt>
+        <dd class="col-sm-9">@Model.Service?.Name</dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">@Model.AppointmentStatus?.Name</dd>
+
+        <dt class="col-sm-3">Tipo</dt>
+        <dd class="col-sm-9">@Model.AppointmentType?.Name</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</div>

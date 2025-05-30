@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AgendaPro.Models.Scheduling.Appointment>
+
+@{
+    ViewData["Title"] = "Lista de Agendamentos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo Agendamento</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Email</th>
+            <th>Data</th>
+            <th>Serviço</th>
+            <th>Status</th>
+            <th>Tipo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.ClientName</td>
+            <td>@item.ClientEmail</td>
+            <td>@item.Date.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@item.Service?.Name</td>
+            <td>@item.AppointmentStatus?.Name</td>
+            <td>@item.AppointmentType?.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
