@@ -10,6 +10,7 @@ namespace AgendaPro.Data;
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Service> Services { get; set; } = null!;
+    public DbSet<Professional> Professionals { get; set; }
     public DbSet<Appointment> Appointments { get; set; } = null!;
     public DbSet<AppointmentStatus> AppointmentStatuses { get; set; } = null!;
     public DbSet<AppointmentType> AppointmentTypes { get; set; } = null!;
