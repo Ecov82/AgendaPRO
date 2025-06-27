@@ -40,9 +40,12 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto; /* empurra para o final no Flexbox */
+    position: relative; /* só necessário se tiver z-index */
+    z-index: 1;
 }
+

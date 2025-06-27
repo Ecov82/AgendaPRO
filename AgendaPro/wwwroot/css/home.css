@@ -1,0 +1,89 @@
+/* ==============================
+   Estilos base para o HTML
+   ============================== */
+
+/* Define o tamanho base da fonte em 14px para dispositivos menores */
+html {
+    font-size: 14px;
+}
+
+/* Aumenta o tamanho da fonte para 16px em telas maiores que 768px */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Define o HTML como elemento com altura mínima de 100% para ocupar toda a altura da tela */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* ==============================
+   Estilos para foco em botões e inputs
+   ============================== */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* Contorno azul claro ao focar */
+}
+
+/* ==============================
+   Estilo global do corpo da página (body)
+   ============================== */
+
+body {
+  /*  margin-bottom: 60px;*/
+    background-image: url('/images/agenda-366244_960_720.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* ==============================
+   Container principal da home
+   ============================== */
+
+.container-home {
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo preto translúcido */
+    color: white; /* Cor padrão do texto dentro do container */
+    /* Pode adicionar padding, margin, border-radius aqui se quiser */
+}
+
+    /* ==============================
+   Estilos específicos para textos e links dentro do container-home
+   ============================== */
+
+    .container-home h1,
+    .container-home p,
+    .container-home a {
+        color: black; /* Texto preto dentro do container */
+    }
+
+/* ==============================
+   Estilos para células da tabela, caso tenha tabela na home
+   ============================== */
+
+table.table tbody td {
+    background-color: rgba(255, 255, 255, 0.7); /* Fundo branco translúcido para células */
+    padding: 8px 12px; /* Espaçamento interno das células */
+}
+
+/* ==============================
+   Classe utilitária para texto preto forçado
+   ============================== */
+
+.texto-preto {
+    color: black !important; /* Força a cor preta */
+}
+.container-home {
+    background-color: rgba(0,0,0,0.6); /* preto translúcido */
+    color: white;
+}
+

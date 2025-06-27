@@ -19,6 +19,14 @@ IdentityBuilder identityBuilder = builder.Services.AddDefaultIdentity<IdentityUs
 
 var app = builder.Build();
 
+// Aplica migrações e popula dados seed
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    db.Seed();
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -30,13 +38,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Essencial para Identity
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // Necessário para páginas de Login/Register
+app.MapRazorPages();
 
 app.Run();

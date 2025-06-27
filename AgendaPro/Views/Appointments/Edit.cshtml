@@ -1,56 +1,80 @@
 ﻿@model AgendaPro.Models.Scheduling.Appointment
 
 @{
-    ViewData["Title"] = "Editar Agendamento";
+    ViewData["Title"] = "Novo Agendamento"; // Ou "Editar Agendamento" para Edit
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/create-appointment.css" />
+}
 
-<h4>Alterar dados do Agendamento</h4>
-<hr />
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" novalidate>
+                    <!-- Campo Nome do Cliente -->
+                    <div class="mb-3">
+                        <label asp-for="ClientName" class="form-label"></label>
+                        <input asp-for="ClientName" class="form-control @(ViewData.ModelState["ClientName"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Digite o nome do cliente" />
+                        <span asp-validation-for="ClientName" class="invalid-feedback"></span>
+                    </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit">
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ClientName" class="control-label"></label>
-                <input asp-for="ClientName" class="form-control" />
-                <span asp-validation-for="ClientName" class="text-danger"></span>
+                    <!-- Campo Email do Cliente -->
+                    <div class="mb-3">
+                        <label asp-for="ClientEmail" class="form-label"></label>
+                        <input asp-for="ClientEmail" type="email" class="form-control @(ViewData.ModelState["ClientEmail"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Digite o email do cliente" />
+                        <span asp-validation-for="ClientEmail" class="invalid-feedback"></span>
+                    </div>
+
+                    <!-- Campo Data e Hora -->
+                    <div class="mb-3">
+                        <label asp-for="Date" class="form-label"></label>
+                        <input asp-for="Date" type="datetime-local" class="form-control @(ViewData.ModelState["Date"]?.Errors.Count > 0 ? "is-invalid" : "")" />
+                        <span asp-validation-for="Date" class="invalid-feedback"></span>
+                    </div>
+
+                    <!-- Dropdown Serviço -->
+                    <div class="mb-3">
+                        <label asp-for="ServiceId" class="form-label"></label>
+                        <select asp-for="ServiceId" class="form-select @(ViewData.ModelState["ServiceId"]?.Errors.Count > 0 ? "is-invalid" : "")" asp-items="ViewBag.ServiceId">
+                            <option value="">-- Selecione um serviço --</option>
+                        </select>
+                        <span asp-validation-for="ServiceId" class="invalid-feedback"></span>
+                    </div>
+
+                    <!-- Dropdown Status do Agendamento -->
+                    <div class="mb-3">
+                        <label asp-for="AppointmentStatusId" class="form-label"></label>
+                        <select asp-for="AppointmentStatusId" class="form-select @(ViewData.ModelState["AppointmentStatusId"]?.Errors.Count > 0 ? "is-invalid" : "")" asp-items="ViewBag.AppointmentStatusId">
+                            <option value="">-- Selecione um status --</option>
+                        </select>
+                        <span asp-validation-for="AppointmentStatusId" class="invalid-feedback"></span>
+                    </div>
+
+                    <!-- Dropdown Tipo de Agendamento -->
+                    <div class="mb-3">
+                        <label asp-for="AppointmentTypeId" class="form-label"></label>
+                        <select asp-for="AppointmentTypeId" class="form-select @(ViewData.ModelState["AppointmentTypeId"]?.Errors.Count > 0 ? "is-invalid" : "")" asp-items="ViewBag.AppointmentTypeId">
+                            <option value="">-- Selecione um tipo --</option>
+                        </select>
+                        <span asp-validation-for="AppointmentTypeId" class="invalid-feedback"></span>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="ClientEmail" class="control-label"></label>
-                <input asp-for="ClientEmail" class="form-control" />
-                <span asp-validation-for="ClientEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" type="datetime-local" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceId" class="control-label">Serviço</label>
-                <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
-                <span asp-validation-for="ServiceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AppointmentStatusId" class="control-label">Status</label>
-                <select asp-for="AppointmentStatusId" class="form-control" asp-items="ViewBag.AppointmentStatusId"></select>
-                <span asp-validation-for="AppointmentStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AppointmentTypeId" class="control-label">Tipo</label>
-                <select asp-for="AppointmentTypeId" class="form-control" asp-items="ViewBag.AppointmentTypeId"></select>
-                <span asp-validation-for="AppointmentTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="Salvar Alterações" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

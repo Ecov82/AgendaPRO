@@ -23,4 +23,10 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Page Include="wwwroot\images\agenda-366244_960_720.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Page>
+	</ItemGroup>
+
 </Project>

@@ -1,0 +1,89 @@
+/* ==============================
+   Estilos base para o HTML
+   ============================== */
+
+/* Tamanho base da fonte para dispositivos menores */
+html {
+    font-size: 14px;
+}
+
+/* Tamanho da fonte aumenta em telas maiores que 768px */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* HTML ocupa altura mínima total da tela */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* ==============================
+   Estilos para foco em botões e inputs
+   ============================== */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* contorno azul claro */
+}
+
+/* ==============================
+   Estilo global do body (fundo e margem)
+   ============================== */
+
+body {
+    /*margin-bottom: 60px; *//* Espaço para rodapé */
+    background-image: url('/images/agenda-366244_960_720.jpg'); /* imagem de fundo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+}
+
+/* ==============================
+   Container específico da página Services
+   ============================== */
+
+.container-services {
+    background-color: rgba(0, 0, 0, 0.6); /* fundo preto translúcido */
+    color: white; /* texto branco padrão */
+    padding: 20px; /* espaçamento interno */
+    border-radius: 10px; /* cantos arredondados */
+    max-width: 95%;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); /* sombra sutil */
+}
+
+    /* ==============================
+   Títulos e textos dentro do container-services
+   ============================== */
+
+    .container-services h1,
+    .container-services p,
+    .container-services a {
+        color: black; /* texto preto para contraste */
+    }
+
+/* ==============================
+   Estilo para células da tabela dentro da página services
+   ============================== */
+
+table.table tbody td {
+    background-color: rgba(255, 255, 255, 0.7); /* fundo branco translúcido */
+    padding: 8px 12px; /* espaçamento interno */
+    color: black; /* texto preto */
+}
+
+/* ==============================
+   Classe utilitária para forçar texto preto
+   ============================== */
+
+.texto-preto {
+    color: black !important;
+}

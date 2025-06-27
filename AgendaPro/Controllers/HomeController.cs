@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using AgendaPro.Models;
 using Microsoft.AspNetCore.Mvc;
+using AgendaPro.Data;
+
 
 namespace AgendaPro.Controllers
 {
@@ -13,16 +15,19 @@ namespace AgendaPro.Controllers
             _logger = logger;
         }
 
+        // Página inicial (dashboard ou landing page)
         public IActionResult Index()
         {
             return View();
         }
 
+        // Página de Política de Privacidade
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // Página de erro padrão com captura do RequestId
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,22 +1,70 @@
-html {
-  font-size: 14px;
+/* ========== RESET E FLEX PRINCIPAL ========== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* ========== ÁREA PRINCIPAL ========== */
+main {
+    flex: 1; /* Ocupa o espaço disponível entre header e footer */
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* ========== RODAPÉ FIXO AO FINAL ========== */
+footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+    z-index: 1;
+    position: relative;
 }
 
+/* ========== FUNDO COM IMAGEM ========== */
 body {
-  margin-bottom: 60px;
+    background-image: url('/images/agenda-366244_960_720.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ========== ESTILOS DE COMPONENTES ========== */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.container-home {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+    .container-home h1,
+    .container-home p,
+    .container-home a {
+        color: black;
+    }
+
+table.table tbody td {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 8px 12px;
+}
+
+.texto-preto {
+    color: black !important;
 }

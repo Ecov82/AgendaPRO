@@ -1,8 +1,8 @@
-﻿using AgendaPro.Models.Scheduling;
+﻿using AgendaPro.Data;
+using AgendaPro.Models.Scheduling;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AgendaPro.Data;
 
 namespace AgendaPro.Controllers
 {
@@ -15,113 +15,48 @@ namespace AgendaPro.Controllers
             _context = context;
         }
 
-        // GET: Appointments
-        public async Task<IActionResult> Index()
+        private void PopulateDropdowns()
         {
-            var list = await _context.Appointments
-                                     .Include(a => a.Service)
-                                     .ToListAsync();
-            return View(list);
+            ViewBag.ServiceId = new SelectList(_context.Services, "Id", "Name");
+            ViewBag.AppointmentStatusId = new SelectList(_context.AppointmentStatuses, "Id", "Name");
+            ViewBag.AppointmentTypeId = new SelectList(_context.AppointmentTypes, "Id", "Name");
         }
 
-        // GET: Appointments/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Index()
         {
-            if (id == null) return NotFound();
-
-            var appt = await _context.Appointments
-                                     .Include(a => a.Service)
-                                     .FirstOrDefaultAsync(a => a.Id == id);
-            if (appt == null) return NotFound();
-
-            return View(appt);
+            var appointments = _context.Appointments
+                .Include(a => a.Service)
+                .Include(a => a.AppointmentStatus)
+                .Include(a => a.AppointmentType)
+                .ToList();
+            return View(appointments);
         }
 
-        // GET: Appointments/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name");
+            PopulateDropdowns();
             return View();
         }
 
-        // POST: Appointments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public IActionResult Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(appointment);
-                await _context.SaveChangesAsync();
+                _context.Appointments.Add(appointment);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
 
-            // Se houver erros de validação, recarrega o dropdown
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
+            ViewBag.ServiceId = new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
+            ViewBag.AppointmentStatusId = new SelectList(_context.AppointmentStatuses, "Id", "Name", appointment.AppointmentStatusId);
+            ViewBag.AppointmentTypeId = new SelectList(_context.AppointmentTypes, "Id", "Name", appointment.AppointmentTypeId);
+
             return View(appointment);
         }
 
-        // GET: Appointments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
 
-            var appointment = await _context.Appointments.FindAsync(id);
-            if (appointment == null) return NotFound();
-
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
-            return View(appointment);
-        }
-
-        // POST: Appointments/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Appointment appointment)
-        {
-            if (id != appointment.Id) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(appointment);
-                    await _context.SaveChangesAsync();
-                } catch (DbUpdateConcurrencyException) when (!_context.Appointments.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", appointment.ServiceId);
-            return View(appointment);
-        }
-
-        // GET: Appointments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var appt = await _context.Appointments
-                                     .Include(a => a.Service)
-                                     .FirstOrDefaultAsync(a => a.Id == id);
-            if (appt == null) return NotFound();
-
-            return View(appt);
-        }
-
-        // POST: Appointments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var appt = await _context.Appointments.FindAsync(id);
-            if (appt != null)
-            {
-                _context.Appointments.Remove(appt);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        // Outros métodos do controlador...
     }
 }

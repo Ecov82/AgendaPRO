@@ -424,4 +424,13 @@ progress {
   display: none !important;
 }
 
+/* Contorno branco leve nas letras */
+/*h1, h2, h3, h4, h5, h6, p, a, span, label, td, th, div {
+    text-shadow: 0 0 1px white;
+}*/
+h1, h2, h3, h4, h5, h6, p, a, span, label, td, th, div {
+    text-shadow: 1px 1px 2px white;
+}
+
+
 /*# sourceMappingURL=bootstrap-reboot.css.map */

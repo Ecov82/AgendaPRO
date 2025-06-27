@@ -4,39 +4,46 @@
     ViewData["Title"] = "Lista de Agendamentos";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Novo Agendamento</a>
-</p>
-
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>Email</th>
-            <th>Data</th>
-            <th>Serviço</th>
-            <th>Status</th>
-            <th>Tipo</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@item.ClientName</td>
-            <td>@item.ClientEmail</td>
-            <td>@item.Date.ToString("dd/MM/yyyy HH:mm")</td>
-            <td>@item.Service?.Name</td>
-            <td>@item.AppointmentStatus?.Name</td>
-            <td>@item.AppointmentType?.Name</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
-            </td>
-        </tr>
+@section Styles {
+    <link rel="stylesheet" href="~/css/appointments.css" />
 }
-    </tbody>
-</table>
+
+<div class="container-appointments">
+    <h2>@ViewData["Title"]</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Novo Agendamento</a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().ClientName)</th>
+                <th>@Html.DisplayNameFor(model => model.First().ClientEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Date)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Service.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.First().AppointmentStatus.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.First().AppointmentType.Name)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ClientName</td>
+                    <td>@item.ClientEmail</td>
+                    <td>@item.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.Service?.Name</td>
+                    <td>@item.AppointmentStatus?.Name</td>
+                    <td>@item.AppointmentType?.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

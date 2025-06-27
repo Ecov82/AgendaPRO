@@ -1,6 +1,6 @@
 ﻿using AgendaPro.Models.Scheduling;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using AgendaPro.Data;
 
 namespace AgendaPro.Controllers
@@ -14,23 +14,7 @@ namespace AgendaPro.Controllers
             _context = context;
         }
 
-        // GET: Services
-        public async Task<IActionResult> Index()
-        {
-            var services = await _context.Services.ToListAsync();
-            return View(services);
-        }
-
-        // GET: Services/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var service = await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
-            if (service == null) return NotFound();
-
-            return View(service);
-        }
+        // Aqui você pode colocar ações específicas para Serviços, por exemplo:
 
         // GET: Services/Create
         public IActionResult Create()
@@ -41,76 +25,17 @@ namespace AgendaPro.Controllers
         // POST: Services/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Service service)
+        public IActionResult Create(Service service)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Services.Add(service);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index)); // ou outro método que listar serviços
             }
             return View(service);
         }
 
-        // GET: Services/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var service = await _context.Services.FindAsync(id);
-            if (service == null) return NotFound();
-
-            return View(service);
-        }
-
-        // POST: Services/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Service service)
-        {
-            if (id != service.Id) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(service);
-                    await _context.SaveChangesAsync();
-                } catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Services.Any(e => e.Id == id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(service);
-        }
-
-        // GET: Services/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var service = await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
-            if (service == null) return NotFound();
-
-            return View(service);
-        }
-
-        // POST: Services/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var service = await _context.Services.FindAsync(id);
-            if (service != null)
-            {
-                _context.Services.Remove(service);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        // Outros métodos para Services (Index, Edit, Delete, etc.) podem ser implementados aqui
     }
 }

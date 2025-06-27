@@ -1,24 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Dashboard Inicial";
-}
+﻿<style>
+    /* Estilo do fundo da página */
+    body {
+        background-image: url('/images/agenda-366244_960_720.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        margin: 0;
+    }
 
-<style>
+    /* Container principal centralizado com fundo preto translúcido */
     .container-home {
         max-width: 800px;
         margin: 50px auto;
         padding: 30px;
         text-align: center;
         border-radius: 10px;
-        background-color: #f2f2f2;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        font-family: Arial, sans-serif;
+        background-color: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        color: white; /* Cor padrão do texto dentro do container */
     }
 
-        .container-home h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+    /* Classe para aplicar texto preto em elementos específicos */
+    .texto-preto {
+        color: black !important;
+    }
 
+    /* Botões principais com espaçamento e cantos arredondados */
     .home-button {
         display: inline-block;
         padding: 12px 25px;
@@ -29,6 +38,7 @@
         transition: background-color 0.3s;
     }
 
+    /* Botão azul para Serviços */
     .btn-services {
         background-color: #007bff;
     }
@@ -37,6 +47,7 @@
             background-color: #0056b3;
         }
 
+    /* Botão verde para Agendamentos */
     .btn-appointments {
         background-color: #28a745;
     }
@@ -45,6 +56,7 @@
             background-color: #1e7e34;
         }
 
+    /* Link de documentação com estilo diferenciado */
     .doc-link {
         display: block;
         margin-top: 20px;
@@ -55,7 +67,7 @@
 
 <div class="container-home">
     <h1>Bem-vindo ao AgendaPRO</h1>
-    <p>Escolha uma das opções abaixo:</p>
+    <p class="texto-preto">Escolha uma das opções abaixo:</p>
 
     <a href="@Url.Action("Index", "Services")" class="home-button btn-services">Ver Serviços</a>
     <a href="@Url.Action("Create", "Appointments")" class="home-button btn-appointments">Criar Agendamento</a>
