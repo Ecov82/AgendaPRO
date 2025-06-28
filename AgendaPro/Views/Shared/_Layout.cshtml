@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AgendaPro</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AgendaPro.styles.css" asp-append-version="true" />
-
     @RenderSection("Styles", required: false)
 </head>
 
-<!--  Adiciona as classes de Flexbox -->
 <body class="d-flex flex-column min-vh-100">
-
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AgendaPro</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-calendar-check"></i> AgendaPro
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
@@ -25,28 +25,57 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door"></i> Início
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidade</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">
+                                <i class="bi bi-list-task"></i> Serviços
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="bi bi-shield-lock"></i> Política de Privacidade
+                            </a>
                         </li>
                     </ul>
+                   
                 </div>
             </div>
         </nav>
     </header>
 
-    <!--  Conteúdo principal flexível -->
     <main role="main" class="flex-fill pb-3">
         <div class="container">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
             @RenderBody()
         </div>
     </main>
 
-    <!--  Rodapé fixo no fim da tela -->
     <footer class="border-top footer text-muted mt-auto">
-        <div class="container">
-            &copy; 2025 - AgendaPro - <a asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidade</a>
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-6">
+                    &copy; @DateTime.Now.Year - AgendaPro - <a asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidade</a>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="text-muted">Versão 1.0.0</span>
+                </div>
+            </div>
         </div>
     </footer>
 

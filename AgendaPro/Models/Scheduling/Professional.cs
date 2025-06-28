@@ -11,11 +11,12 @@ namespace AgendaPro.Models.Scheduling
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = "A profissão é obrigatória.")]
-        [Display(Name = "Profissional")]
+        [Display(Name = "Profissão")]
         public string Profession { get; set; } = null!;
 
         [Required(ErrorMessage = "O e-mail é obrigatório.")]
         [EmailAddress(ErrorMessage = "E-mail inválido.")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; } = null!;
 
         [Phone(ErrorMessage = "Telefone inválido.")]

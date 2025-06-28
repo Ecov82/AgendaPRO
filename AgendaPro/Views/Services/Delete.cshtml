@@ -1,30 +1,80 @@
-﻿@model AgendaPro.Models.Scheduling.Service
+﻿@model IEnumerable<AgendaPro.Models.Scheduling.Service>
 
 @{
-    ViewData["Title"] = "Excluir Serviço";
+    ViewData["Title"] = "Lista de Serviços";
 }
 
 <h2>@ViewData["Title"]</h2>
-<hr />
 
-<h3>Tem certeza que deseja excluir este serviço?</h3>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Criar Novo Serviço</a>
+</p>
 
-<div>
-    <h4>Serviço</h4>
-    <dl class="row">
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Name)</dt>
-        <dd class="col-sm-10">@Model.Name</dd>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal" data-service-id="@item.Id" data-service-name="@item.Name">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
-        <dd class="col-sm-10">@Model.Description</dd>
-
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Price)</dt>
-        <dd class="col-sm-10">@Model.Price.ToString("C")</dd>
-    </dl>
-
-    <form asp-action="DeleteConfirmed">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Excluir" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
-    </form>
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-action="DeleteConfirmed">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir o serviço <strong id="serviceName"></strong>?</p>
+                    <input type="hidden" id="serviceId" name="id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteModal = document.getElementById('deleteModal');
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var serviceId = button.getAttribute('data-service-id');
+                var serviceName = button.getAttribute('data-service-name');
+
+                document.getElementById('serviceName').textContent = serviceName;
+                document.getElementById('serviceId').value = serviceId;
+            });
+        });
+    </script>
+}
+
+

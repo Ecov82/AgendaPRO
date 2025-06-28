@@ -10,21 +10,25 @@ namespace AgendaPro.Models.Scheduling
         [Display(Name = "Nome do Cliente")]
         public string ClientName { get; set; } = string.Empty;
 
-        [Display(Name = "email do Cliente")]
+        [Display(Name = "E-mail do Cliente")]
+        [EmailAddress(ErrorMessage = "E-mail inválido.")]
         public string ClientEmail { get; set; } = string.Empty;
 
-        [Display(Name = "Data")]
+        [Display(Name = "Data e Hora")]
+        [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
+        [Display(Name = "Serviço")]
         public int ServiceId { get; set; }
 
-        [Display(Name = "Serviço")]
         public Service Service { get; set; } = null!;
 
+        [Display(Name = "Status do Agendamento")]
         public int AppointmentStatusId { get; set; }
 
         public AppointmentStatus AppointmentStatus { get; set; } = null!;
 
+        [Display(Name = "Tipo de Agendamento")]
         public int AppointmentTypeId { get; set; }
 
         public AppointmentType AppointmentType { get; set; } = null!;

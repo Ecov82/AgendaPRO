@@ -1,7 +1,7 @@
-﻿using AgendaPro.Models.Scheduling;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using AgendaPro.Models.Scheduling;
 using AgendaPro.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaPro.Controllers
 {
@@ -14,7 +14,12 @@ namespace AgendaPro.Controllers
             _context = context;
         }
 
-        // Aqui você pode colocar ações específicas para Serviços, por exemplo:
+        // GET: Services
+        public IActionResult Index()
+        {
+            var services = _context.Services.ToList();
+            return View(services);
+        }
 
         // GET: Services/Create
         public IActionResult Create()
@@ -31,11 +36,73 @@ namespace AgendaPro.Controllers
             {
                 _context.Services.Add(service);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index)); // ou outro método que listar serviços
+                return RedirectToAction(nameof(Index));
             }
             return View(service);
         }
 
-        // Outros métodos para Services (Index, Edit, Delete, etc.) podem ser implementados aqui
+        // GET: Services/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var service = _context.Services.Find(id);
+            if (service == null)
+            {
+                return NotFound();
+            }
+            return View(service);
+        }
+
+        // POST: Services/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Service service)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(service);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(service);
+        }
+
+        // GET: Services/Details/5
+        public IActionResult Details(int id)
+        {
+            var service = _context.Services.FirstOrDefault(s => s.Id == id);
+            if (service == null)
+            {
+                return NotFound();
+            }
+            return View(service);
+        }
+
+        // POST: Services/DeleteConfirmed
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var service = _context.Services
+                .Include(s => s.Appointments) // Carrega os agendamentos relacionados
+                .FirstOrDefault(s => s.Id == id);
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            // Verifica se existem agendamentos vinculados
+            if (service.Appointments?.Any() == true)
+            {
+                TempData["ErrorMessage"] = "Não é possível excluir um serviço com agendamentos vinculados.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Services.Remove(service);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Serviço excluído com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
