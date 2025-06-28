@@ -1,0 +1,52 @@
+﻿@model AgendaPro.Models.Scheduling.Appointment
+@{
+    ViewData["Title"] = "Agendamento Rápido";
+}
+
+<h2 class="mb-4">Agende seu horário</h2>
+
+<form asp-action="Agendar" method="post">
+    <div class="form-group">
+        <label asp-for="ClientName">Nome</label>
+        <input asp-for="ClientName" class="form-control" required />
+        <span asp-validation-for="ClientName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Telefone</label>
+        <input asp-for="PhoneNumber" class="form-control" required />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientEmail">E-mail (opcional)</label>
+        <input asp-for="ClientEmail" class="form-control" />
+        <span asp-validation-for="ClientEmail" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ServiceId">Serviço</label>
+        <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.Services">
+            <option value="">Selecione um serviço</option>
+        </select>
+        <span asp-validation-for="ServiceId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Date">Data</label>
+        <input asp-for="Date" class="form-control" type="date" required />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Time">Horário</label>
+        <input asp-for="Time" class="form-control" type="time" required />
+        <span asp-validation-for="Time" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Confirmar Agendamento</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

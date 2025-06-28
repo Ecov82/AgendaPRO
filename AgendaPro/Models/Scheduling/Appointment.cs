@@ -7,17 +7,29 @@ namespace AgendaPro.Models.Scheduling
     {
         public int Id { get; set; }
 
-        [Display(Name = "Nome do Cliente")]
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        [Display(Name = "Nome")]
         public string ClientName { get; set; } = string.Empty;
 
-        [Display(Name = "E-mail do Cliente")]
         [EmailAddress(ErrorMessage = "E-mail inválido.")]
-        public string ClientEmail { get; set; } = string.Empty;
+        [Display(Name = "E-mail")]
+        public string? ClientEmail { get; set; }
 
-        [Display(Name = "Data e Hora")]
-        [DataType(DataType.DateTime)]
+        [Required(ErrorMessage = "O telefone é obrigatório.")]
+        [Display(Name = "Telefone")]
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "A data é obrigatória.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data")]
         public DateTime Date { get; set; }
 
+        [Required(ErrorMessage = "O horário é obrigatório.")]
+        [DataType(DataType.Time)]
+        [Display(Name = "Hora")]
+        public TimeSpan Time { get; set; }
+
+        [Required(ErrorMessage = "O serviço é obrigatório.")]
         [Display(Name = "Serviço")]
         public int ServiceId { get; set; }
 
@@ -32,5 +44,8 @@ namespace AgendaPro.Models.Scheduling
         public int AppointmentTypeId { get; set; }
 
         public AppointmentType AppointmentType { get; set; } = null!;
+
+        [Display(Name = "Data de Criação")]
+        public DateTime CreatedAt { get; set; }
     }
 }

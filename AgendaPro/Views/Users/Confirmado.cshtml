@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Agendamento Confirmado";
+}
+
+<div class="alert alert-success mt-4">
+    <h4 class="alert-heading">Agendamento realizado com sucesso!</h4>
+    <p>Você receberá uma confirmação pelo WhatsApp ou e-mail, se fornecido.</p>
+</div>
+
+<a href="@Url.Action("Agendar", "Users")" class="btn btn-primary mt-3">Fazer novo agendamento</a>

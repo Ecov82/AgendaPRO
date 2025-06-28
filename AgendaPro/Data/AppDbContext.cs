@@ -1,17 +1,18 @@
-﻿using AgendaPro.Models.Scheduling;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AgendaPro.Models;
+using AgendaPro.Models.Scheduling;
+using AgendaPro.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaPro.Data;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : DbContext
 {
     public DbSet<Service> Services { get; set; } = null!;
     public DbSet<Professional> Professionals { get; set; } = null!;
     public DbSet<Appointment> Appointments { get; set; } = null!;
     public DbSet<AppointmentStatus> AppointmentStatuses { get; set; } = null!;
     public DbSet<AppointmentType> AppointmentTypes { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -31,8 +32,22 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             .OnDelete(DeleteBehavior.Cascade);
     }
 
+    // Método único de seed
     public void Seed()
     {
+        // Criação do usuário mestre fixo
+        if (!Users.Any(u => u.Email.ToLower() == "cleitoneco@gmail.com"))
+        {
+            Users.Add(new User
+            {
+                Name = "Administrador Mestre",
+                Email = "cleitoneco@gmail.com",
+                PasswordHash = PasswordHasher.ComputeHash("SenhaForte123!"),
+                IsMaster = true
+            });
+        }
+
+        // Seed de serviços
         if (!Services.Any())
         {
             Services.AddRange(
@@ -41,6 +56,7 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             );
         }
 
+        // Seed de status
         if (!AppointmentStatuses.Any())
         {
             AppointmentStatuses.AddRange(
@@ -50,6 +66,7 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             );
         }
 
+        // Seed de tipos
         if (!AppointmentTypes.Any())
         {
             AppointmentTypes.AddRange(
@@ -60,5 +77,4 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
 
         SaveChanges();
     }
-
 }
